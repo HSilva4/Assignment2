@@ -35,16 +35,33 @@
           <input type="range" id="numCircles" name="numCircles" min="0" max="250" step="1" value="15" oninput="showVal(this.value, 3)" onchange="showVal(this.value, 3)">
           <span id="currentValue3">15</span>
           
-          <br>Rate of Growth:
+          <br>Rate of Growth*:
           <input type="range" id="rateOfGrowth" name="rateOfGrowth" min="1" max="1.5" step="0.01" value="1" oninput="showVal(this.value, 4)" onchange="showVal(this.value, 4)">
           <span id="currentValue4">1</span>
           
-          <br>Swap Colors On Contact:
-          <input type="checkbox" id="swapColors" name="swapColors" checked>          
+          <br>Swap Colors On Contact**:
+          <input type="checkbox" id="swapColors" name="swapColors" checked>  
+         
+          <br>Color Options:<br>
+          <input type="radio" name="colors" id="randomRGB" value="randomRBG" checked>Random RGB value<br>
+          <input type="radio" name="colors" id="RorGorB" value="RorGorB">Each circle is red, green, or blue
         </form>
+        
+        <div id="colorStats" hidden>
+          Number of Colors Statistics:<br>
+          Red: <span id="numRed"></span><br>
+          Green: <span id="numGreen"></span><br>
+          Blue: <span id="numBlue"></span><br>
+          White: <span id="numWhite"></span><br>
+          Black: <span id="numBlack"></span><br>
+        </div>
         
         <button id="startButton" type="button" form="form1" value="Button">Start</button>
         <button id="resetButton" type="reset" form="form1" value="Reset">Reset</button> 
+        <div class="info">
+          <br><br>*On contact, one circle will grow by the rate of growth and one will shrink by the same rate.
+          <br>**On contact, either the red, green or blue color value for each circle will be swapped with one another.  
+        </div>
       </div>
     </div>
 
