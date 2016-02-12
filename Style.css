@@ -30,3 +30,11 @@ html, body {
   vertical-align: top;
 }
 
+.game #form1 input {
+  margin-bottom: 10px;
+}
+
+.game .info {
+  font-size: 12px;
+}
+
