@@ -10,20 +10,23 @@ function getRandomNumber(min, max) {
 
 function subtractColor(circle) {
   switch (circle.color) {
-    case 'rgb(255, 0, 0)':
+    case 'rgb(255,0,0)':
       numRed--;
       break;
-    case 'rgb(0, 255, 0)':
+    case 'rgb(0,255,0)':
       numGreen--;
       break;
-    case 'rgb(0, 0, 255)':
+    case 'rgb(0,0,255)':
       numBlue--;
       break;
-    case 'rgb(255, 255, 255)':
+    case 'rgb(255,255,255)':
       numWhite--;
       break;
-    case 'rgb(0, 0, 0)':
+    case 'rgb(0,0,0)':
       numBlack--;
+      break;
+    default:
+      numOther--;
       break;
   }
 }
@@ -31,21 +34,24 @@ function subtractColor(circle) {
 
 function addColor(circle) {
   switch (circle.color) {
-    case 'rgb(255, 0, 0)':
+    case 'rgb(255,0,0)':
       numRed++;
       break;
-    case 'rgb(0, 255, 0)':
+    case 'rgb(0,255,0)':
       numGreen++;
       break;
-    case 'rgb(0, 0, 255)':
+    case 'rgb(0,0,255)':
       numBlue++;
       break;
-    case 'rgb(255, 255, 255)':
+    case 'rgb(255,255,255)':
       numWhite++;
       break;
-    case 'rgb(0, 0, 0)':
+    case 'rgb(0,0,0)':
       numBlack++;
       break;
+    default:
+      numOther++;
+      break;      
   }
 }
 ;
@@ -162,8 +168,8 @@ Circle.prototype.update = function () {
 
       if (swapColors) {
         if (RorGorB) {
-          subtractColor(this.color);
-          subtractColor(ent.color);
+          subtractColor(this);
+          subtractColor(ent);
         }
 
         var colorToSwap = getRandomNumber(0, 2);
@@ -186,13 +192,14 @@ Circle.prototype.update = function () {
         this.color = 'rgb(' + this.red + ',' + this.green + ',' + this.blue + ')';
         ent.color = 'rgb(' + ent.red + ',' + ent.green + ',' + ent.blue + ')';
         if (RorGorB) {
-          addColor(this.color);
-          addColor(ent.color);
+          addColor(this);
+          addColor(ent);
           document.getElementById("numRed").innerHTML = numRed;
           document.getElementById("numGreen").innerHTML = numGreen;
           document.getElementById("numBlue").innerHTML = numBlue;
           document.getElementById("numWhite").innerHTML = numWhite;
           document.getElementById("numBlack").innerHTML = numBlack;
+          document.getElementById("numOther").innerHTML = numOther;
         }
       }
 
@@ -221,10 +228,11 @@ Circle.prototype.update = function () {
 Circle.prototype.draw = function (ctx) {
   ctx.beginPath();
   ctx.fillStyle = this.color;
+  ctx.strokeStyle = 'rgb(255,0,0)';
   ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+  if (this.color === 'rgb(0,0,0)') ctx.stroke();
   ctx.fill();
   ctx.closePath();
-
 };
 
 
@@ -252,6 +260,7 @@ document.getElementById('startButton').onclick = function () {
   numBlue = 0;
   numWhite = 0;
   numBlack = 0;
+  numOther = 0;
   for (var i = 0; i < gameEngine.entities.length; i++) {
     gameEngine.entities[i].removeFromWorld = true;
   }
@@ -266,6 +275,7 @@ document.getElementById('startButton').onclick = function () {
   document.getElementById("numBlue").innerHTML = numBlue;
   document.getElementById("numWhite").innerHTML = numWhite;
   document.getElementById("numBlack").innerHTML = numBlack;
+  document.getElementById("numOther").innerHTML = numOther;
 
 };
 
@@ -282,13 +292,14 @@ document.getElementById('resetButton').onclick = function () {
   numCircles = 15;
   rateOfGrowth = 1;
   swapColors = 1;
-  randomRBG = 1;
+  randomRGB = 1;
   RorGorB = 0;
   numRed = 0;
   numGreen = 0;
   numBlue = 0;
   numWhite = 0;
   numBlack = 0;
+  numOther = 0;
   for (var i = 0; i < gameEngine.entities.length; i++) {
     gameEngine.entities[i].removeFromWorld = true;
   }
@@ -313,6 +324,7 @@ var numGreen = 0;
 var numBlue = 0;
 var numWhite = 0;
 var numBlack = 0;
+var numOther = 0;
 var gameEngine;
 
 var ASSET_MANAGER = new AssetManager();
